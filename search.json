@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Billboard Graphic",
+    "section": "",
+    "text": "library(tidyverse)\n\n\nbillboard |&gt;\n  pivot_longer(\n    cols = starts_with(\"wk\"),\n    names_to = \"week\",\n    values_to = \"rank\",\n    values_drop_na = TRUE\n  ) |&gt;\n  mutate(week = parse_number(week)) |&gt;\n  ggplot(aes(x = week, y = rank, group = track)) +\n  geom_line(alpha = 0.25, color = \"steelblue\") +\n  scale_y_reverse() +\n  theme_minimal() +\n  labs(\n    title = \"Billboard Top 100 Song Trajectories (2000)\",\n    subtitle = \"Rank over time for songs on the chart\",\n    x = \"Week\",\n    y = \"Rank (1 is top)\",\n    caption = \"Source: tidyr::billboard\"\n  )\n\n\n\n\n\n\n\n\n\nbillboard |&gt;\n  pivot_longer(\n    cols = starts_with(\"wk\"),\n    names_to = \"week\",\n    values_to = \"rank\",\n    values_drop_na = TRUE\n  ) |&gt;\n  # Count how many weeks each song spent on the chart\n  summarize(weeks_on_chart = n(), .by = c(artist, track)) |&gt;\n  slice_max(weeks_on_chart, n = 10, with_ties = FALSE) |&gt;\n  # Format label and order songs so the longest-charting appears on top\n  mutate(\n    song = paste0(track, \" (\", artist, \")\"),\n    song = fct_reorder(song, weeks_on_chart)\n  ) |&gt;\n  ggplot(aes(x = weeks_on_chart, y = song, fill = weeks_on_chart)) +\n  geom_col(show.legend = FALSE) +\n  scale_fill_viridis_c(option = \"magma\", direction = -1) +\n  theme_minimal() +\n  labs(\n    title = \"Top 10 Longest-Running Billboard Hits (2000)\",\n    subtitle = \"Number of weeks spent on the Billboard Hot 100\",\n    x = \"Total Weeks on Chart\",\n    y = NULL,\n    caption = \"Source: tidyr::billboard\"\n  )"
+  }
+]

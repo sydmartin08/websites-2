@@ -2,4 +2,8 @@
 title: "About"
 ---
 
-About this site
+## About Me
+My name is **Sydney Martin**, and I graduated from **Central Cabarrus High School**.
+
+
+[Kane’s Free Data Science Bootcamp]https://bootcamp.davidkane.info
